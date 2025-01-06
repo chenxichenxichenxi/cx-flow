@@ -9,6 +9,9 @@
     "build": "vite build",
     "preview": "vite preview"
   },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "vite-plugin-vue2": "^2.0.3",
     "vue-template-compiler": "^2.7.16"
