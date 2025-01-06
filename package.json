@@ -1,0 +1,28 @@
+{
+  "name": "cx-flow",
+  "private": false,
+  "version": "0.0.1",
+  "description": "流程图",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.5",
+    "vite-plugin-vue2": "^2.0.3",
+    "vue-template-compiler": "^2.7.16"
+  },
+  "dependencies": {
+    "butterfly-dag": "^5.1.0-beta.38",
+    "butterfly-vue": "^1.0.22",
+    "element-ui": "^2.15.14",
+    "esbuild": "^0.24.2",
+    "node-sass": "^9.0.0",
+    "rollup": "^4.29.2",
+    "sass-embedded": "^1.83.1",
+    "vue": "^2.6.14"
+  }
+}
