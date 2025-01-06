@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1",
     "vite": "^6.0.5",
     "vite-plugin-vue2": "^2.0.3",
     "vue-template-compiler": "^2.7.16"
