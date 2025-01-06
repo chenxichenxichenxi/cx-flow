@@ -4,6 +4,7 @@
   "version": "0.0.2",
   "description": "流程图",
   "license": "MIT",
+  "main": "dist/cx-flow.umd.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
