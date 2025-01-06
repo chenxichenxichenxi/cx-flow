@@ -16,6 +16,7 @@
     "vue-template-compiler": "^2.7.16"
   },
   "dependencies": {
+    "@vitejs/plugin-vue": "^1.10.2",
     "butterfly-dag": "^5.1.0-beta.38",
     "butterfly-vue": "^1.0.22",
     "element-ui": "^2.15.14",
