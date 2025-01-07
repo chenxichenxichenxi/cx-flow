@@ -1,7 +1,7 @@
 {
   "name": "cx-flow",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "流程图",
   "license": "MIT",
   "main": "dist/cx-flow.umd.js",
@@ -29,5 +29,11 @@
     "sass-embedded": "^1.83.1",
     "vite": "^2.9.18",
     "vue": "^2.6.14"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.14",
+    "element-ui": "^2.15.14",
+    "sass": "^1.83.1",
+    "sass-embedded": "^1.83.1"
   }
 }
