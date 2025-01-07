@@ -25,6 +25,7 @@ import mockData from "./mockData.js";
 import BaseNode from './baseNode.vue';
 
 export default {
+  name: 'butterflyDagVue',
   components: {
     ButterflyVue,
   },

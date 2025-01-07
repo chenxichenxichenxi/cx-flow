@@ -12,6 +12,7 @@ export default defineConfig({
       entry: './src/main.js',
       name: 'cx-flow',
       fileName: 'cx-flow',
+      cssCodeSplit: false,
     },
   }
 })
