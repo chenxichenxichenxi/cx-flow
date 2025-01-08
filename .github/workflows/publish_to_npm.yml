@@ -1,30 +1,48 @@
-name: Publish to NPM
+name: Publish to NPM  # 工作流名称：发布到NPM
 
 on:
   release:
-    types: [created]
+    types: [created]  # 触发条件：当创建新的发布版本时
 
 jobs:
-  build-and-publish:
-    runs-on: ubuntu-latest
+  build-and-publish:  # 工作名称：构建并发布
+    runs-on: ubuntu-latest  # 运行环境：最新的Ubuntu
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Checkout code  # 步骤名称：检出代码
+      uses: actions/checkout@v3  # 使用actions/checkout@v3来检出代码
 
-    - name: Set up Node.js 18
-      uses: actions/setup-node@v3
+    - name: Set up Node.js 18  # 步骤名称：设置Node.js 18
+      uses: actions/setup-node@v3  # 使用actions/setup-node@v3来设置Node.js环境
       with:
-        node-version: '18'
+        node-version: '18'  # 指定Node.js版本为18
 
-    - name: Install dependencies
-      run: npm install
+    - name: Install dependencies  # 步骤名称：安装依赖
+      run: npm install  # 运行npm install来安装项目依赖
 
-    - name: Build
-      run: npm run build
+    - name: Build  # 步骤名称：构建
+      run: npm run build  # 运行npm run build来构建项目
 
-    - name: Publish to NPM
-      uses: JS-DevTools/npm-publish@v1
+    - name: Publish to NPM  # 步骤名称：发布到NPM
+      uses: JS-DevTools/npm-publish@v1  # 使用JS-DevTools/npm-publish@v1来发布到NPM
       with:
-        token: ${{ secrets.NPM_TOKEN }}
-        registry: https://registry.npmjs.org
+        token: ${{ secrets.NPM_TOKEN }}  # 使用GitHub仓库的secrets中的NPM_TOKEN
+        registry: https://registry.npmjs.org  # 指定NPM注册表地址
+
+     # 新增步骤：删除所有历史版本
+    - name: Delete all old versions from NPM  # 步骤名称：从NPM删除所有旧版本
+      run: |
+        # 安装 npm-registry-fetch，用于与 NPM 注册表交互
+        npm install -g npm-registry-fetch
+        # 获取所有版本
+        npm view ${PACKAGE_NAME} versions --registry https://registry.npmjs.org | \
+        # 过滤掉最新版本
+        grep -v $(npm view${PACKAGE_NAME} version --registry https://registry.npmjs.org) | \
+        # 删除每个版本
+        while read version; do
+          npm deprecate ${PACKAGE_NAME}@${version} "This version has been deprecated and will be removed soon." --registry https://registry.npmjs.org
+          npm unpublish ${PACKAGE_NAME}@${version} --registry https://registry.npmjs.org
+        done
+      env:
+        PACKAGE_NAME: 'cx-flow' # 替换为你的包名
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
