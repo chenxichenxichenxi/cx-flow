@@ -1,7 +1,7 @@
 {
   "name": "cx-flow",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "流程图",
   "license": "MIT",
   "main": "dist/cx-flow.umd.js",
@@ -13,26 +13,21 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
+  "devDependencies": {
     "@vitejs/plugin-vue": "^1.10.2",
-    "butterfly-dag": "^5.1.0-beta.38",
-    "butterfly-vue": "^1.0.22",
-    "element-ui": "^2.15.14",
     "esbuild": "^0.24.2",
-    "node-sass": "^9.0.0",
     "rollup": "^4.29.2",
-    "sass": "^1.83.1",
-    "sass-embedded": "^1.83.1",
     "vite": "^2.9.18",
-    "vue": "^2.6.14",
     "vite-plugin-vue2": "^2.0.3",
     "vue-template-compiler": "^2.7.16"
   },
-  "peerDependencies": {
-    "vue": "^2.6.14",
+  "dependencies": {
+    "butterfly-dag": "^5.1.0-beta.38",
+    "butterfly-vue": "^1.0.22",
     "element-ui": "^2.15.14",
+    "node-sass": "^9.0.0",
     "sass": "^1.83.1",
     "sass-embedded": "^1.83.1",
-    "node-sass": "^9.0.0"
+    "vue": "^2.6.14"
   }
 }
