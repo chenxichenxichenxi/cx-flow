@@ -30,28 +30,4 @@ jobs:
         registry: https://registry.npmjs.org  # 指定NPM注册表地址
 
     - name: Deprecate all previous versions  # 步骤名称：废弃所有历史版本
-      run: |
-        # 设置NPM令牌和注册表地址
-        export NPM_TOKEN=${{ secrets.NPM_TOKEN }}
-        export npm_config_registry=https://registry.npmjs.org
-
-        # 获取当前包的名称
-        PACKAGE_NAME=$(cat package.json | grep name | head -1 | awk -F: '{ print$2 }' | sed 's/[",]//g' | tr -d '[:space:]')
-        # 获取当前包的版本
-        CURRENT_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print$2 }' | sed 's/[",]//g' | tr -d '[:space:]')
-
-        # 验证包名称是否正确
-        if npm view "$PACKAGE_NAME" | grep -q "404"; then
-          echo "Error: Package '$PACKAGE_NAME' not found in npm registry."
-          exit 1
-        fi
-
-        # 废弃除了当前版本之外的所有版本
-        npm view "$PACKAGE_NAME" versions | \
-          sed "s/'$CURRENT_VERSION'//" | \
-          sed 's/,$//' | \
-          sed 's/[][]//g' | \
-          tr ' ' '\n' | \
-          while read -r version; do
-            npm deprecate "$PACKAGE_NAME@$version" "This version is deprecated. Please use the latest version."
-          done
+      run: npm deprecate cx-flow@<0.0.10
