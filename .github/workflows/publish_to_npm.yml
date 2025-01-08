@@ -36,6 +36,14 @@ jobs:
         # 获取当前包的版本
         CURRENT_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print$2 }' | sed 's/[",]//g' | tr -d '[:space:]')
         # 废弃除了当前版本之外的所有版本
-        npm view $PACKAGE_NAME versions | sed "s/'$CURRENT_VERSION'//" | sed 's/,$//' | sed 's/[][]//g' | xargs -I {} npm deprecate$PACKAGE_NAME@{} "This version is deprecated. Please use the latest version."
+        npm view "$PACKAGE_NAME" versions | \
+          sed "s/'$CURRENT_VERSION'//" | \
+          sed 's/,$//' | \
+          sed 's/[][]//g' | \
+          tr ' ' '\n' | \
+          while read -r version; do
+            npm deprecate "$PACKAGE_NAME@$version" "This version is deprecated. Please use the latest version."
+          done
+
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}  # 确保NPM_TOKEN环境变量被设置
