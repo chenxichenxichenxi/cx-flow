@@ -29,19 +29,13 @@ jobs:
         token: ${{ secrets.NPM_TOKEN }}  # 使用GitHub仓库的secrets中的NPM_TOKEN
         registry: https://registry.npmjs.org  # 指定NPM注册表地址
 
-    - name: Delete all old versions from NPM # 步骤名称：从NPM删除所有旧版本
+    - name: Deprecate all previous versions  # 步骤名称：废弃所有历史版本
       run: |
-        # 安装 npm-registry-fetch，用于与 NPM 注册表交互
-        npm install -g npm-registry-fetch
-        # 获取所有版本并排除最新版本
-        ALL_VERSIONS=$(npm view${PACKAGE_NAME} versions --registry https://registry.npmjs.org)
-        LATEST_VERSION=$(npm view${PACKAGE_NAME} version --registry https://registry.npmjs.org)
-        # 删除除最新版本之外的所有版本
-        for VERSION in $ALL_VERSIONS; do
-          if [ "$VERSION" != "$LATEST_VERSION" ]; then
-            npm deprecate ${PACKAGE_NAME}@${VERSION} "This version has been deprecated and will be removed soon." --registry https://registry.npmjs.org
-            npm unpublish ${PACKAGE_NAME}@${VERSION} --registry https://registry.npmjs.org
-          fi
-        done
+        # 获取当前包的名称
+        PACKAGE_NAME=$(cat package.json | grep name | head -1 | awk -F: '{ print$2 }' | sed 's/[",]//g' | tr -d '[:space:]')
+        # 获取当前包的版本
+        CURRENT_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print$2 }' | sed 's/[",]//g' | tr -d '[:space:]')
+        # 废弃除了当前版本之外的所有版本
+        npm view $PACKAGE_NAME versions | sed "s/'$CURRENT_VERSION'//" | sed 's/,$//' | sed 's/[][]//g' | xargs -I {} npm deprecate$PACKAGE_NAME@{} "This version is deprecated. Please use the latest version."
       env:
-        PACKAGE_NAME: 'cx-flow'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}  # 确保NPM_TOKEN环境变量被设置
